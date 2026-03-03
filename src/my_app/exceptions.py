@@ -91,3 +91,9 @@ class InvalidScoreError(ValidationError):
     """
     def __init__(self, score: int):
         super().__init__(f"Score {score} is invalid. Score must be between 1 and 5.")
+
+class InvalidInputError(ValidationError):
+    """ Error to indicate that the provided input data is invalid.
+    """
+    def __init__(self, message: str):
+        super().__init__(message)

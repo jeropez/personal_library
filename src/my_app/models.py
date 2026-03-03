@@ -14,8 +14,8 @@ class Book:
     genre_id: str
     score: Optional[int]  # 1–5
     review: Optional[str]
-    author: Author = None
-    genre: Genre = None 
+    author: Author | None = None
+    genre: Genre | None = None
 
 @dataclass
 class Author:

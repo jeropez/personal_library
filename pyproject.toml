@@ -14,4 +14,9 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [project.optional-dependencies]
-dev = ["pytest"]
+dev = ["pytest",
+        "ruff"
+]
+
+[project.scripts]
+library = "my_app.cli:app"

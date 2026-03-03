@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1,
+        "title": "We were liars",
+        "author_id": 1,
+        "publishing_year": 2014,
+        "total_pages": 256,
+        "pages_read": 0,
+        "genre_id": "Psychological Thriller",
+        "score": null,
+        "review": null,
+        "author": null,
+        "genre": null
+    },
+    {
+        "id": 3,
+        "title": "Harry Potter and the Goblet of Fire",
+        "author_id": 2,
+        "publishing_year": 2000,
+        "total_pages": 752,
+        "pages_read": 0,
+        "genre_id": "Fantasy",
+        "score": null,
+        "review": null,
+        "author": null,
+        "genre": null
+    },
+    {
+        "id": 4,
+        "title": "Harry Potter and the Half-Blood Prince",
+        "author_id": 2,
+        "publishing_year": 2005,
+        "total_pages": 672,
+        "pages_read": 0,
+        "genre_id": "Fantasy",
+        "score": null,
+        "review": null,
+        "author": null,
+        "genre": null
+    }
+]

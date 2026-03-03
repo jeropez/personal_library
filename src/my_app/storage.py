@@ -17,11 +17,14 @@ class Storage(Protocol):
 class JsonStorage:
     """ Implementación de Storage que utiliza archivos JSON para persistencia.
     """
-    def __init__(self, base_path: Path):
-        self.base_path = base_path
+    def __init__(self, base_path: str | Path):
+        base_path = Path(base_path)
+
         self.libros_file = base_path / "libros.json"
         self.autores_file = base_path / "autores.json"
         self.generos_file = base_path / "generos.json"
+
+        base_path.mkdir(exist_ok=True)
 
     def load_books(self) -> List[Book]:
         if not self.libros_file.exists():

@@ -39,11 +39,6 @@ class DuplicateError(AppError):
     """
     pass
 
-class InvalidInputError(AppError):
-    """ Error related to invalid input data.
-    """
-    pass
-
 class BookNotFoundError(NotFoundError):
     """ Error to indicate that a book was not found.
     """

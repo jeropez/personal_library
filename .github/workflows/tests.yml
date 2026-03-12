@@ -25,3 +25,7 @@ jobs:
 
       - name: Run Tests
         run: uv run pytest
+      
+      - name: Check code quality with radon
+        run: uv run radon cc -s -a
+        

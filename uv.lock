@@ -265,6 +265,7 @@ dependencies = [
     { name = "mkdocstrings", extra = ["python"] },
     { name = "radon" },
     { name = "randon" },
+    { name = "ruff" },
 ]
 
 [package.optional-dependencies]
@@ -280,6 +281,7 @@ requires-dist = [
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "radon", specifier = ">=6.0.1" },
     { name = "randon", specifier = ">=0.0.6" },
+    { name = "ruff", specifier = ">=0.15.4" },
     { name = "ruff", marker = "extra == 'dev'" },
 ]
 provides-extras = ["dev"]

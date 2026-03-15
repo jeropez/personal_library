@@ -2,4 +2,4 @@
 
 ## UserService
 
-::: mi_app.services.UserService
+::: my_app.services.LibroService

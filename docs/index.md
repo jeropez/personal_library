@@ -1,17 +1,20 @@
-# Welcome to MkDocs
+# Personal Library Managment CLI
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Bienvenido a la documentación oficial de **Personal Library Managment**, una aplicación
+de línea de comandos desarrollada en Python para gestionar una libreria personal utilizando
+principios de **Clean Code**, **Testing** y **Arquitectura modular**.
 
-## Commands
+## Características
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- CLI moderna basada en **Typer**
+- Persistencia de datos en archivo JSON
+- Arquitectura modular (`src layout`)
+- Pruebas unitarias con `pytest`
+- Uso de **mocks** para aislar dependencias
+- Excepciones personalizadas
+- Principios de diseño **SOLID**
+- Documentación generada automáticamente
 
-## Project layout
+## 📦 Arquitectura del sistema
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+

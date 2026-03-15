@@ -1,5 +1,9 @@
+from my_app.cli import app
+
+
 def main():
-    print("Hello from personal-library!")
+    """Entry point of the application."""
+    app()
 
 
 if __name__ == "__main__":

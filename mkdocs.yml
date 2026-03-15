@@ -3,19 +3,19 @@ site_description: An application to manage your personal library of books, inclu
 site_url: https://yourusername.github.io/personal-library-manager/
 
 theme:
-  name: material
+  name: mkdocs
   palette:
     - scheme: default
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/brightness-7
+        icon: mkdocs/brightness-7
         name: Switch to dark mode
     - scheme: slate # modo oscuro
       primary: indigo
       accent: indigo
       toggle:
-        icon: material/brightness-4
+        icon: mkdocs/brightness-4
         name: Switch to light mode
 
 plugins:

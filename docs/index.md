@@ -18,26 +18,26 @@ principios de **Clean Code**, **Testing** y **Arquitectura modular**.
 ## Arquitectura del sistema
 
 ```mermaid
-flowchart LR
+    flowchart LR
 
-    CLI["CLI (cli.py)<br/>Typer + Rich<br/>Interfaz de usuario"]
+        CLI["CLI (cli.py)<br/>Typer + Rich<br/>Interfaz de usuario"]
 
-    SERVICES["Services (services.py)<br/>Lógica de negocio<br/>Validaciones<br/>Reglas del dominio"]
+        SERVICES["Services (services.py)<br/>Lógica de negocio<br/>Validaciones<br/>Reglas del dominio"]
 
-    MODELS["Models (models.py)<br/>Book<br/>Author<br/>Genre<br/>Dataclasses"]
+        MODELS["Models (models.py)<br/>Book<br/>Author<br/>Genre<br/>Dataclasses"]
 
-    STORAGE["Storage (storage.py)<br/>Persistencia<br/>Lectura / Escritura"]
+        STORAGE["Storage (storage.py)<br/>Persistencia<br/>Lectura / Escritura"]
 
-    DATA["JSON Files (data/)<br/>libros.json<br/>autores.json<br/>generos.json"]
+        DATA["JSON Files (data/)<br/>libros.json<br/>autores.json<br/>generos.json"]
 
-    EXCEPTIONS["Exceptions (exceptions.py)<br/>BookNotFoundError<br/>AuthorNotFoundError<br/>GenreNotFoundError<br/>InvalidScoreError<br/>etc."]
+        EXCEPTIONS["Exceptions (exceptions.py)<br/>BookNotFoundError<br/>AuthorNotFoundError<br/>GenreNotFoundError<br/>InvalidScoreError<br/>etc."]
 
-    CLI --> SERVICES
-    SERVICES --> STORAGE
-    STORAGE --> DATA
-    SERVICES --> MODELS
-    SERVICES --> EXCEPTIONS
-    CLI --> EXCEPTIONS
+        CLI --> SERVICES
+        SERVICES --> STORAGE
+        STORAGE --> DATA
+        SERVICES --> MODELS
+        SERVICES --> EXCEPTIONS
+        CLI --> EXCEPTIONS
 ```
 
 ## Estructura del sistema
@@ -67,29 +67,29 @@ personal_library/
 
 ## Flujo general de ejecución
 ```mermaid
-sequenceDiagram
-    actor User
-    participant CLI as "CLI (cli.py)"
-    participant Service as "LibroService (services.py)"
-    participant Storage as "Storage (storage.py)"
-    participant Data as "JSON Files (data/)"
+    sequenceDiagram
+        actor User
+        participant CLI as "CLI (cli.py)"
+        participant Service as "LibroService (services.py)"
+        participant Storage as "Storage (storage.py)"
+        participant Data as "JSON Files (data/)"
 
-    User->>CLI: "Ejecuta comando (ej. add-book)"
-    CLI->>Service: "Llama método del servicio"
-    Service->>Storage: "Solicita datos (load_books / load_authors / load_genres)"
-    Storage->>Data: "Lee archivos JSON"
-    Data-->>Storage: "Devuelve datos"
-    Storage-->>Service: "Retorna objetos cargados"
+        User->>CLI: "Ejecuta comando (ej. add-book)"
+        CLI->>Service: "Llama método del servicio"
+        Service->>Storage: "Solicita datos (load_books / load_authors / load_genres)"
+        Storage->>Data: "Lee archivos JSON"
+        Data-->>Storage: "Devuelve datos"
+        Storage-->>Service: "Retorna objetos cargados"
 
-    Service->>Service: "Aplica validaciones y lógica de negocio"
+        Service->>Service: "Aplica validaciones y lógica de negocio"
 
-    Service->>Storage: "Guarda cambios (save_books / save_authors / save_genres)"
-    Storage->>Data: "Escribe en archivos JSON"
-    Data-->>Storage: "Confirmación"
+        Service->>Storage: "Guarda cambios (save_books / save_authors / save_genres)"
+        Storage->>Data: "Escribe en archivos JSON"
+        Data-->>Storage: "Confirmación"
 
-    Storage-->>Service: "Operación completada"
-    Service-->>CLI: "Resultado de la operación"
-    CLI-->>User: "Muestra resultado con Rich"
+        Storage-->>Service: "Operación completada"
+        Service-->>CLI: "Resultado de la operación"
+        CLI-->>User: "Muestra resultado con Rich"
 ```
 
 ## Documentación

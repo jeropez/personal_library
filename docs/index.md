@@ -17,7 +17,7 @@ principios de **Clean Code**, **Testing** y **Arquitectura modular**.
 
 ## Arquitectura del sistema
 
-''' mermaid
+``` mermaid
 flowchart LR
 
     CLI["CLI (cli.py)
@@ -57,10 +57,10 @@ flowchart LR
     SERVICES --> MODELS
     SERVICES --> EXCEPTIONS
     CLI --> EXCEPTIONS
-'''
+```
 
 ## Estructura del sistema
-''' bash
+```bash
 personal_library/
 ├── README.md
 ├── pyproject.toml
@@ -82,9 +82,10 @@ personal_library/
     ├── __init__.py
     ├── conftest.py
     └── test_services.py
+```
 
 ## Flujo general de ejecución
-''' mermaid
+``` mermaid
 sequenceDiagram
     actor User
     participant CLI as CLI (cli.py)
@@ -108,7 +109,7 @@ sequenceDiagram
     Storage-->>Service: Operación completada
     Service-->>CLI: Resultado de la operación
     CLI-->>User: Muestra resultado con Rich
-'''
+```
 
 ## Documentación
 

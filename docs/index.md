@@ -17,39 +17,20 @@ principios de **Clean Code**, **Testing** y **Arquitectura modular**.
 
 ## Arquitectura del sistema
 
-``` mermaid
+```mermaid
 flowchart LR
 
-    CLI["CLI (cli.py)
-    Typer + Rich
-    Interfaz de usuario"]
+    CLI["CLI (cli.py)<br/>Typer + Rich<br/>Interfaz de usuario"]
 
-    SERVICES["Services (services.py)
-    Lógica de negocio
-    Validaciones
-    Reglas del dominio"]
+    SERVICES["Services (services.py)<br/>Lógica de negocio<br/>Validaciones<br/>Reglas del dominio"]
 
-    MODELS["Models (models.py)
-    Book
-    Author
-    Genre
-    Dataclasses"]
+    MODELS["Models (models.py)<br/>Book<br/>Author<br/>Genre<br/>Dataclasses"]
 
-    STORAGE["Storage (storage.py)
-    Persistencia
-    Lectura / Escritura"]
+    STORAGE["Storage (storage.py)<br/>Persistencia<br/>Lectura / Escritura"]
 
-    DATA["JSON Files (data/)
-    libros.json
-    autores.json
-    generos.json"]
+    DATA["JSON Files (data/)<br/>libros.json<br/>autores.json<br/>generos.json"]
 
-    EXCEPTIONS["Exceptions (exceptions.py)
-    BookNotFoundError
-    AuthorNotFoundError
-    GenreNotFoundError
-    InvalidScoreError
-    etc."]
+    EXCEPTIONS["Exceptions (exceptions.py)<br/>BookNotFoundError<br/>AuthorNotFoundError<br/>GenreNotFoundError<br/>InvalidScoreError<br/>etc."]
 
     CLI --> SERVICES
     SERVICES --> STORAGE
@@ -85,30 +66,30 @@ personal_library/
 ```
 
 ## Flujo general de ejecución
-``` mermaid
+```mermaid
 sequenceDiagram
     actor User
-    participant CLI as CLI (cli.py)
-    participant Service as LibroService (services.py)
-    participant Storage as Storage (storage.py)
-    participant Data as JSON Files (data/)
+    participant CLI as "CLI (cli.py)"
+    participant Service as "LibroService (services.py)"
+    participant Storage as "Storage (storage.py)"
+    participant Data as "JSON Files (data/)"
 
-    User->>CLI: Ejecuta comando (ej. add-book)
-    CLI->>Service: Llama método del servicio
-    Service->>Storage: Solicita datos (load_books / load_authors / load_genres)
-    Storage->>Data: Lee archivos JSON
-    Data-->>Storage: Devuelve datos
-    Storage-->>Service: Retorna objetos cargados
+    User->>CLI: "Ejecuta comando (ej. add-book)"
+    CLI->>Service: "Llama método del servicio"
+    Service->>Storage: "Solicita datos (load_books / load_authors / load_genres)"
+    Storage->>Data: "Lee archivos JSON"
+    Data-->>Storage: "Devuelve datos"
+    Storage-->>Service: "Retorna objetos cargados"
 
-    Service->>Service: Aplica validaciones y lógica de negocio
+    Service->>Service: "Aplica validaciones y lógica de negocio"
 
-    Service->>Storage: Guarda cambios (save_books / save_authors / save_genres)
-    Storage->>Data: Escribe en archivos JSON
-    Data-->>Storage: Confirmación
+    Service->>Storage: "Guarda cambios (save_books / save_authors / save_genres)"
+    Storage->>Data: "Escribe en archivos JSON"
+    Data-->>Storage: "Confirmación"
 
-    Storage-->>Service: Operación completada
-    Service-->>CLI: Resultado de la operación
-    CLI-->>User: Muestra resultado con Rich
+    Storage-->>Service: "Operación completada"
+    Service-->>CLI: "Resultado de la operación"
+    CLI-->>User: "Muestra resultado con Rich"
 ```
 
 ## Documentación

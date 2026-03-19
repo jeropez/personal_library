@@ -1,8 +1,9 @@
 name: ci 
+
 on:
   push:
     branches:
-      - main # O tu rama principal
+      - main
 
 permissions:
   contents: write
@@ -10,6 +11,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,5 +26,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
 
+      - name: Install MkDocs dependencies
+        run: uv pip install mkdocs-material mkdocstrings[python]
+
       - name: Deploy to GitHub Pages
         run: uv run mkdocs gh-deploy --force
+

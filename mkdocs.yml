@@ -31,7 +31,7 @@ nav:
   - Guía de instalación: guia_instalacion.md
   - Guía de desarrollo: guia_desarrollo.md
   - Arquitectura del sistema: architecture.md
-  - Persistencia de datos: docs/user_guide/persistence.md
+  - Persistencia de datos: user_guide/persistence.md
   - Referencia técnica:
     - API de python: reference.md
 

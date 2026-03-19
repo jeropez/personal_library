@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/architecture/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/guia_desarrollo/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/guia_instalacion/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/reference/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/user_guide/guia_usuario/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+    <url>
+         <loc>https://jeropez.github.io/personal-library-manager/user_guide/persistence/</loc>
+         <lastmod>2026-03-19</lastmod>
+    </url>
+</urlset>

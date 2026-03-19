@@ -54,3 +54,29 @@ Listar géneros: uv run library list-genres
 
 Libros de un género: uv run library genre-books Fantasy
 
+## Ejemplos de salida 
+
+### 1
+
+**Comando:** uv run main.py list-books
+
+**Salida esperada:**{'title': 'El Principito', 'author': 'Antoine de Saint-Exupéry', 'genre': 'Ficción'}
+{'title': '1984', 'author': 'George Orwell', 'genre': 'Distopía'}
+
+### 2
+
+**Comando:** uv run main.py add-book "" "Autor" "Ficción"
+
+**Salida esperada:** Error: Title cannot be empty
+
+### 3
+
+**Comando:** uv run main.py add-book "Dune" "Frank Herbert" "Ciencia ficción"
+             uv run main.py list-books
+
+**Salida esperada:** Book added successfully
+
+{'title': 'Dune', 'author': 'Frank Herbert', 'genre': 'Ciencia ficción'}
+
+
+

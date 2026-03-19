@@ -16,13 +16,6 @@ Se utiliza ruff para análisis estático de código.
 
 uv run ruff check .
 
-## Persistencia
-
-Los datos se almacenan en archivos JSON dentro de la carpeta:
-
-data/
-
-Archivos utilizados: - libros.json - authors.json - genres.json
 
 ## Validaciones implementadas
 

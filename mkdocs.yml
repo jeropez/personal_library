@@ -27,11 +27,13 @@ plugins:
 
 nav:
   - Inicio: index.md
-  - Guía de usuario: guia_usuario.md
-  - Guia de instalación: guia_instalacion.md
+  - Guía de usuario: user_guide/guia_usuario.md
+  - Guía de instalación: guia_instalacion.md
   - Guía de desarrollo: guia_desarrollo.md
+  - Arquitectura del sistema: architecture.md
+  - Persistencia de datos: user_guide/persistence.md
   - Referencia técnica:
-    - API de python: referencia/api.md
+    - API de python: reference.md
 
 markdown_extensions:
   - admonition

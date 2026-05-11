@@ -4,9 +4,9 @@
 flowchart LR
     CLI["CLI (cli.py)<br/>Typer + Rich<br/>Interfaz de usuario"]
 
-    SERVICES["Services (services.py)<br/>Lógica de negocio<br/>Validaciones<br/>Reglas del dominio"]
+    SERVICES["Services<br/>Lógica de negocio<br/>Validaciones<br/>Reglas del dominio"]
 
-    MODELS["Models (models.py)<br/>Book<br/>Author<br/>Genre<br/>Dataclasses"]
+    MODELS["Models<br/>Book<br/>Author<br/>Genre<br/>Dataclasses"]
 
     STORAGE["Storage (storage.py)<br/>Persistencia<br/>Lectura / Escritura"]
 
@@ -22,7 +22,6 @@ flowchart LR
     CLI --> EXCEPTIONS
 ```
 
-
 Este proyecto sigue una arquitectura por capas (layered architecture) que separa responsabilidades para mejorar la mantenibilidad, escalabilidad y claridad del código.
 
 ---
@@ -37,7 +36,7 @@ flowchart LR
     end
 
     subgraph Business
-        Service[LibroService]
+        Service[Services]
     end
 
     subgraph Persistence
@@ -58,62 +57,8 @@ flowchart LR
     Storage --> Genres
 ```
 
-## Descripción de las capas
+## Flujo de ejecución
 
-### CLI (Interfaz)
-
-
-Se encarga de:
-
-- Recibir comandos del usuario
-
-- Validar parámetros de entrada básicos
-
-- Invocar los métodos del servicio
-
-**Ejemplo:** add_book(title, author, genre)
-
-### Service (Lógica de negocio)
-
-Contiene la lógica principal de la aplicación:
-
-- Creación de entidades
-
-- Validaciones de negocio
-
-- Orquestación de operaciones
-
-**Ejemplo:** LibroService.add_book()
-
-### Storage (Persistencia)
-
-Encapsula el acceso a datos:
-
-- Lectura de archivos JSON
-
-- Escritura de archivos JSON
-
-- Manejo de múltiples recursos
-
-### Data (Almacenamiento)
-
-El sistema utiliza archivos JSON separados por entidad:
-
-- books.json
-
-- authors.json
-
-- genres.json
-
-Esto permite:
-
-- Separación de datos
-
-- Mejor organización
-
-- Escalabilidad
-
-## Flujo de ejecucion
 ```mermaid
 sequenceDiagram
     actor User
@@ -132,24 +77,62 @@ sequenceDiagram
     Storage->>JSON: Escribe archivo
 ```
 
-## Desiciones de diseño
+## Descripción de las capas
+
+### CLI (Interfaz)
+
+Se encarga de:
+
+- Recibir comandos del usuario
+- Validar parámetros de entrada básicos
+- Invocar los métodos del servicio
+
+### Service (Lógica de negocio)
+
+Contiene la lógica principal de la aplicación:
+
+- Creación de entidades
+- Validaciones de negocio
+- Orquestación de operaciones
+
+### Storage (Persistencia)
+
+Encapsula el acceso a datos:
+
+- Lectura de archivos JSON
+- Escritura de archivos JSON
+- Manejo de múltiples recursos
+
+### Data (Almacenamiento)
+
+El sistema utiliza archivos JSON separados por entidad:
+
+- books.json
+- authors.json
+- genres.json
+
+Esto permite:
+
+- Separación de datos
+- Mejor organización
+- Escalabilidad
+
+## Decisiones de diseño
 
 ### Uso de src layout
+
 El proyecto utiliza la estructura src/ para:
 
 - Evitar problemas de importación
-
 - Separar código fuente de configuración
 
 ### Separación por capas
 
 Cada módulo tiene una responsabilidad única:
 
-- CLI -> interfaz
-
-- Service -> lógica
-
-- Storage -> persistencia
+- CLI → interfaz
+- Service → lógica
+- Storage → persistencia
 
 Esto sigue el principio de **Single Responsibility**.
 
@@ -158,15 +141,21 @@ Esto sigue el principio de **Single Responsibility**.
 Los modelos se implementan como dataclasses para:
 
 - Reducir código boilerplate
-
 - Facilitar serialización
-
 - Mejorar legibilidad
 
 ### Validaciones en modelos
 
-Se utilizan métodos ___post_init___() para validar:
+Se utilizan métodos `__post_init__()` para validar:
 
 - Datos obligatorios
-
 - Consistencia de objetos
+
+## Calidad del código
+
+El proyecto implementa:
+
+- Ruff para linting
+- Pytest para testing
+- Radon para complejidad ciclomática
+- GitHub Actions para CI/CD

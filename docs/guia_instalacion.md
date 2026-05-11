@@ -1,18 +1,47 @@
-# Guía de instalación 
+# Guía de instalación
 
 Esta guía explica cómo instalar la aplicación de línea de comandos para gestionar la libreria personal.
 
-## Instalción paso a paso
+## Instalación paso a paso
 
-1️⃣ Clonar el repositorio:
+### 1️⃣ Clonar el repositorio
 
-git clone https://github.com/tu-usuario/personal_library.git cd
-personal_library
+```bash
+git clone https://github.com/jeropez/personal_library.git
+cd personal_library
+```
 
-2️⃣ Instalar dependencias con uv:
+### 2️⃣ Instalar dependencias con uv
 
-uv sync –extra dev
+=== "Linux / Mac"
 
-3️⃣ Ejecutar la aplicación:
+    ```bash
+    uv sync
+    ```
 
-uv run library list-books
+=== "Windows"
+
+    ```powershell
+    uv sync
+    ```
+
+### 3️⃣ Ejecutar la aplicación
+
+```bash
+uv run main.py --help
+```
+
+### 4️⃣ Ejecutar pruebas
+
+```bash
+uv run pytest
+```
+
+### 5️⃣ Ejecutar análisis de complejidad
+
+```bash
+uv run radon cc src -a
+```
+
+!!! tip
+    Asegúrate de tener Python 3.11 o superior instalado.

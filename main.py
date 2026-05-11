@@ -1,4 +1,4 @@
-from my_app.cli import app
+from personal_library.cli import app
 
 
 def main():

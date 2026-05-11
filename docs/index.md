@@ -14,32 +14,64 @@ principios de **Clean Code**, **Testing** y **Arquitectura modular**.
 - Excepciones personalizadas
 - Principios de diseño **SOLID**
 - Documentación generada automáticamente
+- Análisis de complejidad ciclomática con **Radon**
+- Integración continua con GitHub Actions
 
 ## Estructura del sistema
+
 ```bash
 personal_library/
 ├── README.md
 ├── pyproject.toml
 ├── uv.lock
 ├── main.py
+├── mkdocs.yml
 ├── data
 │   ├── libros.json
 │   ├── autores.json
 │   └── generos.json
+├── docs
+│   ├── index.md
+│   ├── guia-instalacion.md
+│   ├── guia-desarrollo.md
+│   ├── architecture.md
+│   ├── reference.md
+│   └── user_guide
+│       ├── guia_usuario.md
+│       └── persistance.md
 ├── src
-│   └── my_app
+│   └── personal_library
 │       ├── __init__.py
 │       ├── cli.py
-│       ├── models.py
-│       ├── services.py
-│       ├── storage.py
-│       └── exceptions.py
+│       ├── exceptions.py
+│       ├── models
+│       │   ├── __init__.py
+│       │   ├── author.py
+│       │   ├── book.py
+│       │   └── genre.py
+│       ├── services
+│       │   ├── __init__.py
+│       │   ├── author_service.py
+│       │   ├── book_service.py
+│       │   └── genre_service.py
+│       └── storage.py
 └── tests
     ├── __init__.py
     ├── conftest.py
     └── test_services.py
 ```
 
+## Flujo general del sistema
+
+```mermaid
+flowchart TD
+
+User --> CLI
+CLI --> Services
+Services --> Models
+Services --> Storage
+Storage --> JSON
+```
 
 ## Documentación
 
@@ -53,4 +85,3 @@ Esta documentación está dividida en tres secciones principales:
 
 !!! tip "Recomendación"
     Si es tu primera vez usando el proyecto, comienza por la sección **Guía de Usuario**.
-

@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import MagicMock
-from my_app.services import LibroService
+from personal_library.services import LibroService
 
 
 @pytest.fixture

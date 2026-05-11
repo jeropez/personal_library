@@ -1,6 +1,6 @@
 import streamlit as st
-from my_app.services import LibroService
-from my_app.storage import JsonStorage
+from personal_library.services import LibroService
+from personal_library.storage import JsonStorage
 
 storage_libros= JsonStorage('libros.json')
 libro_service = LibroService(storage_libros)

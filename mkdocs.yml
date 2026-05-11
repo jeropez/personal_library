@@ -4,6 +4,7 @@ site_url: https://jeropez.github.io/personal-library-manager/
 
 theme:
   name: material
+
   palette:
     - scheme: default
       primary: indigo
@@ -11,15 +12,22 @@ theme:
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    - scheme: slate # modo oscuro
+
+    - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
 
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+
 plugins:
-  - search:
+  - search
+
   - mkdocstrings:
       handlers:
         python:
@@ -28,21 +36,23 @@ plugins:
 nav:
   - Inicio: index.md
   - Guía de usuario: user_guide/guia_usuario.md
-  - Guía de instalación: guia_instalacion.md
-  - Guía de desarrollo: guia_desarrollo.md
+  - Guía de instalación: guia-instalacion.md
+  - Guía de desarrollo: guia-desarrollo.md
   - Arquitectura del sistema: architecture.md
-  - Persistencia de datos: user_guide/persistence.md
+  - Persistencia de datos: user_guide/persistance.md
   - Referencia técnica:
-    - API de python: reference.md
+      - API de python: reference.md
 
 markdown_extensions:
   - admonition
   - pymdownx.details
+
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+
   - pymdownx.tabbed
   - pymdownx.highlight
   - pymdownx.inlinehilite

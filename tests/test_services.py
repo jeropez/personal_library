@@ -1,10 +1,10 @@
 import pytest 
-from my_app.services import LibroService
+from personal_library.services import LibroService
 from unittest.mock import MagicMock
-from my_app.models import (Book, 
+from personal_library.models import (Book, 
                            Author, 
                            Genre)
-from my_app.exceptions import (
+from personal_library.exceptions import (
     AuthorAlreadyExistsError, 
     AuthorNotFoundError, 
     GenreNotFoundError, 

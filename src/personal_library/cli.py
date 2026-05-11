@@ -4,8 +4,8 @@ from rich.panel import Panel
 from rich.table import Table
 from rich import box
 
-from my_app.services import LibroService
-from my_app.storage import JsonStorage
+from personal_library.services import LibroService
+from personal_library.storage import JsonStorage
 
 app = typer.Typer()
 console = Console()

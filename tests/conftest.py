@@ -1,9 +1,10 @@
 import pytest
 from unittest.mock import MagicMock
-from personal_library.services import LibroService
+from personal_library.services.book_service import BookService
+
 
 
 @pytest.fixture
 def libro_service():
     mock_storage = MagicMock()
-    return LibroService(mock_storage)
+    return BookService(mock_storage)

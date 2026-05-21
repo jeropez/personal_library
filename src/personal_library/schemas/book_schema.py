@@ -23,5 +23,17 @@ class BookUpdate(BaseModel):
     review: str | None = None
 
 
+class BookReviewUpdate(BaseModel):
+    review: str
+
+
+class BookScoreUpdate(BaseModel):
+    score: int = Field(ge=1, le=5)
+
+
+class BookProgressUpdate(BaseModel):
+    read_pages: int = Field(ge=0)
+
+
 class BookResponse(BookCreate):
     id: int

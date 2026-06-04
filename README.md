@@ -1,169 +1,282 @@
-📚 PERSONAL LIBRARY MANAGER
+# Personal Library Manager
 
-Aplicación de gestión de biblioteca personal desarrollada en Python.
-Permite administrar libros, autores y géneros, llevar seguimiento de
-lectura, asignar puntuaciones y escribir reseñas desde la terminal.
+## Descripción
 
-  --------------------
-  🚀 CARACTERÍSTICAS
-  --------------------
+Personal Library Manager es una aplicación web desarrollada en Python para gestionar una biblioteca personal.
 
-📖 Gestión de Libros - Agregar libros - Buscar libro por ID - Listar
-todos los libros - Eliminar libro por ID - Actualizar progreso de
-lectura (páginas leídas) - Asignar puntuación (1–5) - Escribir reseña -
-Mostrar todos los detalles de un libro
+La aplicación permite administrar libros, autores y géneros, registrar progreso de lectura, asignar puntuaciones y escribir reseñas. El sistema está compuesto por un backend REST construido con FastAPI, una base de datos PostgreSQL en Supabase y una interfaz web desarrollada con Streamlit.
 
-✍ Gestión de Autores - Agregar autor - Buscar autor por ID - Listar
-todos los autores - Listar todos los libros de un autor
+---
 
-🏷 Gestión de Géneros - Crear género - Buscar género por ID o nombre -
-Listar todos los géneros - Listar libros de un género
+## Tecnologías utilizadas
 
-  ----------------
-  🏗 ARQUITECTURA
-  ----------------
+- Python 3.11+
+- FastAPI
+- Streamlit
+- Supabase (PostgreSQL)
+- Pydantic
+- Pytest
+- Ruff
+- Radon
+- MkDocs Material
+- GitHub Actions
 
-El proyecto sigue principios de Clean Architecture y separación de
-responsabilidades.
+---
 
-Estructura:
+## Arquitectura
 
-src/my_app/ - models.py -> Entidades (Book, Author, Genre) - services.py
--> Lógica de negocio - storage.py -> Persistencia en JSON - cli.py ->
-Interfaz de línea de comandos - exceptions.py -> Excepciones
-personalizadas
+El proyecto sigue una arquitectura por capas con separación clara de responsabilidades.
 
-Separación clara entre: - Dominio - Persistencia - Interfaz - Manejo de
-errores
+| Capa | Responsabilidad |
+|--------|--------|
+| api | Endpoints HTTP |
+| services | Lógica de negocio |
+| repositories | Acceso a datos |
+| schemas | Validación y contratos de datos |
+| core | Configuración y excepciones |
 
-  ---------------
-  ⚙ INSTALACIÓN
-  ---------------
+---
 
-1️⃣ Clonar el repositorio:
+## Estructura del proyecto
 
-git clone https://github.com/tu-usuario/personal_library.git cd
-personal_library
+```text
+personal_library/
+│
+├── src/
+│   └── personal_library/
+│       ├── api/
+│       ├── services/
+│       ├── repositories/
+│       ├── schemas/
+│       ├── models/
+│       └── core/
+│
+├── interfaces/
+│   └── gui/
+│       └── streamlit_app.py
+│
+├── tests/
+│
+├── docs/
+│
+└── mkdocs.yml
+```
 
-2️⃣ Instalar dependencias con uv:
+---
 
-uv sync –extra dev
+## Modelo Entidad Relación
 
-3️⃣ Ejecutar la aplicación:
+```mermaid
+erDiagram
 
-uv run library list-books
+    AUTHORS ||--o{ BOOKS : writes
+    GENRES ||--o{ BOOKS : categorizes
 
-  ------------------------
-  🖥 USO DE LA APLICACIÓN
-  ------------------------
+    AUTHORS {
+        int id PK
+        string name
+        string nationality
+    }
 
-📖 Agregar un libro:
+    GENRES {
+        int id PK
+        string name
+    }
 
-uv run library add-book
+    BOOKS {
+        int id PK
+        string title
+        int author_id FK
+        int genre_id FK
+        int published_year
+        int total_pages
+        int read_pages
+        int score
+        string review
+    }
+```
 
-🔍 Buscar libro por ID:
+---
 
-uv run library find-book 1
+## Variables de entorno
 
-📚 Listar libros:
+Crear un archivo `.env` en la raíz del proyecto:
 
-uv run library list-books
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_KEY=your-supabase-key
+```
 
-❌ Eliminar libro:
+---
 
-uv run library delete-book 1
+## Instalación
 
-📈 Actualizar progreso de lectura:
+Clonar el repositorio:
 
-uv run library update-progress 1 150
+```bash
+git clone https://github.com/usuario/personal_library.git
+cd personal_library
+```
 
-⭐ Puntuar libro:
+Instalar dependencias:
 
-uv run library rate-book 1 5
+```bash
+uv sync
+```
 
-📝 Escribir reseña:
+---
 
-uv run library review-book 1 “Excelente libro”
+## Ejecutar Backend
 
-👤 Gestión de autores:
+Iniciar la API REST:
 
-Agregar autor: uv run library add-author
+```bash
+uv run uvicorn src.personal_library.api.main:app --reload
+```
 
-Listar autores: uv run library list-authors
+Documentación automática:
 
-Libros de un autor: uv run library author-books 1
+### Swagger
 
-🏷 Gestión de géneros:
+```text
+http://127.0.0.1:8000/docs
+```
 
-Agregar género: uv run library add-genre
+### ReDoc
 
-Listar géneros: uv run library list-genres
+```text
+http://127.0.0.1:8000/redoc
+```
 
-Libros de un género: uv run library genre-books Fantasy
+---
 
-  ------------
-  🧪 TESTING
-  ------------
+## Ejecutar Frontend
 
-El proyecto incluye más de 10 pruebas unitarias usando pytest.
+Iniciar Streamlit:
 
-Ejecutar pruebas:
+```bash
+streamlit run interfaces/gui/streamlit_app.py
+```
 
+---
+
+## Funcionalidades
+
+### Gestión de Libros
+
+- Crear libros
+- Consultar libros
+- Actualizar libros
+- Eliminar libros
+- Actualizar progreso de lectura
+- Actualizar reseñas
+- Actualizar puntuaciones
+- Consultar libros por autor
+- Consultar libros por género
+
+### Gestión de Autores
+
+- Crear autores
+- Consultar autores
+
+### Gestión de Géneros
+
+- Crear géneros
+- Consultar géneros
+
+---
+
+## API REST
+
+### Endpoints de Libros
+
+| Método | Endpoint |
+|----------|----------|
+| GET | /books |
+| GET | /books/{id} |
+| POST | /books |
+| PUT | /books/{id} |
+| DELETE | /books/{id} |
+| PATCH | /books/{id}/progress |
+| PATCH | /books/{id}/review |
+| PATCH | /books/{id}/score |
+| GET | /books/author/{author_id} |
+| GET | /books/genre/{genre_id} |
+
+### Endpoints de Autores
+
+| Método | Endpoint |
+|----------|----------|
+| GET | /authors |
+| POST | /authors |
+
+### Endpoints de Géneros
+
+| Método | Endpoint |
+|----------|----------|
+| GET | /genres |
+| POST | /genres |
+
+---
+
+## Calidad de Software
+
+### Ejecutar pruebas
+
+```bash
 uv run pytest
+```
 
-Todas las pruebas deben pasar correctamente.
+### Ejecutar Ruff
 
-  -----------
-  🔎 LINTER
-  -----------
-
-Se utiliza ruff para análisis estático de código.
-
+```bash
 uv run ruff check .
+```
 
-  -----------------
-  💾 PERSISTENCIA
-  -----------------
+### Ejecutar Radon
 
-Los datos se almacenan en archivos JSON dentro de la carpeta:
+```bash
+uv run radon cc src -a
+```
 
-data/
+---
 
-Archivos utilizados: - libros.json - authors.json - genres.json
+## Documentación
 
-  -------------------------------
-  🧠 VALIDACIONES IMPLEMENTADAS
-  -------------------------------
+La documentación se genera automáticamente utilizando MkDocs Material y se despliega mediante GitHub Pages.
 
--   No se permite agregar libros con autor inexistente
--   No se permite agregar libros con género inexistente
--   Las páginas leídas no pueden superar el total
--   El puntaje debe estar entre 1 y 5
--   No se permiten IDs duplicados
--   Manejo de errores mediante excepciones personalizadas
+---
 
-  ---------------
-  📦 REQUISITOS
-  ---------------
+## Características de Calidad
 
--   Python >= 3.11
--   uv
--   pytest
--   typer
--   rich
--   ruff
+- Arquitectura por capas
+- Clean Code
+- Validación con Pydantic
+- Testing automatizado
+- Integración continua con GitHub Actions
+- Documentación automática con MkDocs
+- API REST documentada con Swagger y ReDoc
+- Persistencia en PostgreSQL mediante Supabase
 
-  ----------------------
-  👨‍💻 DESCRIPCIÓN FINAL
-  ----------------------
+---
 
-Proyecto desarrollado aplicando principios de:
+## Estado del Proyecto
 
--   Clean Code
--   Arquitectura en capas
--   Testing automatizado
--   Manejo explícito de errores
--   CLI profesional con Rich y Typer
+✅ Backend FastAPI funcional
 
-Estado del proyecto: ✔ Tests automatizados ✔ Validaciones completas ✔
-CLI interactiva ✔ Persistencia en JSON ✔ Linter configurado
+✅ Frontend Streamlit funcional
+
+✅ Integración con Supabase
+
+✅ CRUD completo
+
+✅ Testing automatizado
+
+✅ Linter configurado
+
+✅ Documentación automática
+
+✅ Arquitectura limpia
+
+✅ API documentada
+

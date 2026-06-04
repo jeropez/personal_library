@@ -25,6 +25,37 @@ flowchart LR
 Este proyecto sigue una arquitectura por capas (layered architecture) que separa responsabilidades para mejorar la mantenibilidad, escalabilidad y claridad del código.
 
 ---
+## Diagrama ER
+```mermaid
+erDiagram
+
+    AUTHORS ||--o{ BOOKS : writes
+    GENRES ||--o{ BOOKS : categorizes
+
+    AUTHORS {
+        int id PK
+        string name
+        string nationality
+    }
+
+    GENRES {
+        int id PK
+        string name
+    }
+
+    BOOKS {
+        int id PK
+        string title
+        int author_id FK
+        int genre_id FK
+        int published_year
+        int total_pages
+        int read_pages
+        int score
+        string review
+    }
+```
+---
 
 ## Vista general
 

@@ -1,145 +1,445 @@
+import requests
 import streamlit as st
-from personal_library.services import LibroService
-from personal_library.storage import JsonStorage
 
-storage_libros= JsonStorage('libros.json')
-libro_service = LibroService(storage_libros)
-service = LibroService(storage_libros)
+API_URL = "http://127.0.0.1:8000"
 
-storage_autores = JsonStorage('autores.json')
-service_autores = LibroService(storage_autores)
+st.set_page_config(
+    page_title="Personal Library",
+    page_icon="📚",
+    layout="wide",
+)
 
-storage_generos = JsonStorage('generos.json')
-service_generos = LibroService(storage_generos)
+st.title("📚 Personal Library Manager")
 
-st.title("Gestión de Libros")
+tab1, tab2, tab3 = st.tabs(
+    ["Libros", "Autores", "Géneros"]
+)
 
-# Formulario para agregar un nuevo libro
-st.header("Agregar un nuevo libro")
-with st.form("add_book_form"):
-    titulo = st.text_input("Título")
-    autor = st.text_input("Autor")
-    genero = st.text_input("Género")
-    submit_button = st.form_submit_button("Agregar Libro")
-    if submit_button:
-        libro_service.agregar_libro(titulo, autor, genero)
-        st.success("Libro agregado exitosamente")
+# ==========================
+# AUTORES
+# ==========================
 
-# Formulario para buscar libros por título
-st.header("Buscar libros por título")
-with st.form("search_book_form"):
-    search_title = st.text_input("Título a buscar")
-    search_button = st.form_submit_button("Buscar")
-    if search_button:
-        libro = libro_service.buscar_libro_por_titulo(search_title)
-        if libro:
-            st.write(f"**Título:** {libro['titulo']}")
-            st.write(f"**Autor:** {libro['autor']}")
-            st.write(f"**Género:** {libro['genero']}")
+with tab2:
+
+    st.header("Agregar autor")
+
+    with st.form("author_form"):
+        name = st.text_input("Nombre")
+        nationality = st.text_input("Nacionalidad")
+
+        submitted = st.form_submit_button("Guardar")
+
+        if submitted:
+            response = requests.post(
+                f"{API_URL}/authors/",
+                json={
+                    "name": name,
+                    "nationality": nationality,
+                },
+            )
+
+            if response.status_code == 200:
+                st.success("Autor agregado")
+            else:
+                st.error(response.text)
+
+    st.header("Autores")
+
+    response = requests.get(
+        f"{API_URL}/authors/"
+    )
+
+    if response.status_code == 200:
+        authors = response.json()
+
+        if authors:
+            st.dataframe(authors)
         else:
-            st.warning("No se encontró ningún libro con ese título")
+            st.info("No hay autores")
 
-# Formulario para eliminar un libro por título
-st.header("Eliminar un libro por título")
-with st.form("delete_book_form"):
-    delete_title = st.text_input("Título a eliminar")
-    delete_button = st.form_submit_button("Eliminar")
-    if delete_button:
-        libro_service.eliminar_libro(delete_title)
-        st.success("Libro eliminado exitosamente")
-# Formulario para buscar libros por autor
-st.header("Buscar libros por autor")
-with st.form("search_books_by_author_form"):
-    search_author = st.text_input("Autor a buscar")
-    search_button = st.form_submit_button("Buscar")
-    if search_button:
-        libros = libro_service.buscar_libros_por_autor(search_author)
-        if libros:
-            for libro in libros:
-                st.write(f"**Título:** {libro['titulo']}")
-                st.write(f"**Autor:** {libro['autor']}")
-                st.write(f"**Género:** {libro['genero']}")
-                st.write("---")
+
+# ==========================
+# GENEROS
+# ==========================
+
+with tab3:
+
+    st.header("Agregar género")
+
+    with st.form("genre_form"):
+        name = st.text_input("Nombre género")
+
+        submitted = st.form_submit_button(
+            "Guardar género"
+        )
+
+        if submitted:
+            response = requests.post(
+                f"{API_URL}/genres/",
+                json={
+                    "name": name,
+                },
+            )
+
+            if response.status_code == 200:
+                st.success("Género agregado")
+            else:
+                st.error(response.text)
+
+    st.header("Géneros")
+
+    response = requests.get(
+        f"{API_URL}/genres/"
+    )
+
+    if response.status_code == 200:
+        genres = response.json()
+
+        if genres:
+            st.dataframe(genres)
         else:
-            st.warning("No se encontraron libros de ese autor")
-# Formulario para buscar libros por género
-st.header("Buscar libros por género")
-with st.form("search_books_by_genre_form"):
-    search_genre = st.text_input("Género a buscar")
-    search_button = st.form_submit_button("Buscar")
-    if search_button:
-        libros = libro_service.buscar_libros_por_genero(search_genre)
-        if libros:
-            for libro in libros:
-                st.write(f"**Título:** {libro['titulo']}")
-                st.write(f"**Autor:** {libro['autor']}")
-                st.write(f"**Género:** {libro['genero']}")
-                st.write("---")
+            st.info("No hay géneros")
+
+
+# ==========================
+# LIBROS
+# ==========================
+
+with tab1:
+
+    st.header("Agregar libro")
+
+    title = st.text_input("Título")
+
+    author_id = st.number_input(
+        "ID Autor",
+        min_value=1,
+        step=1,
+    )
+
+    genre_id = st.number_input(
+        "ID Género",
+        min_value=1,
+        step=1,
+    )
+
+    published_year = st.number_input(
+        "Año publicación",
+        value=2024,
+    )
+
+    total_pages = st.number_input(
+        "Total páginas",
+        min_value=1,
+        value=100,
+    )
+
+    read_pages = st.number_input(
+        "Páginas leídas",
+        min_value=0,
+        value=0,
+    )
+
+    score = st.slider(
+        "Puntaje",
+        1,
+        5,
+        3,
+    )
+
+    review = st.text_area(
+        "Review"
+    )
+
+    if st.button(
+        "Crear libro",
+        key="create_book"
+    ):
+
+        response = requests.post(
+            f"{API_URL}/books/",
+            json={
+                "title": title,
+                "author_id": int(author_id),
+                "genre_id": int(genre_id),
+                "published_year": int(
+                    published_year
+                ),
+                "total_pages": int(
+                    total_pages
+                ),
+                "read_pages": int(
+                    read_pages
+                ),
+                "score": int(score),
+                "review": review,
+            },
+        )
+
+        if response.status_code == 200:
+            st.success("Libro creado")
         else:
-            st.warning("No se encontraron libros de ese género")
-# Formulario para agregar un nuevo autor
-st.header("Agregar un nuevo autor")
-with st.form("add_author_form"):
-    nombre_autor = st.text_input("Nombre del autor")
-    submit_button = st.form_submit_button("Agregar Autor")
-    if submit_button:
-        service_autores.agregar_autor(nombre_autor)
-        st.success("Autor agregado exitosamente")
-# Formulario para agregar un nuevo género
-st.header("Agregar un nuevo género")
-with st.form("add_genre_form"):
-    nombre_genero = st.text_input("Nombre del género")
-    submit_button = st.form_submit_button("Agregar Género")
-    if submit_button:
-        service_generos.agregar_genero(nombre_genero)
-        st.success("Género agregado exitosamente")
-# Listado de autores 
-st.header("Listado de autores")
-autores = service_autores.listar_autores()
-if autores:
-    for autor in autores:
-        st.write(f"**Nombre:** {autor['nombre']}")
-        st.write("---")
-else:
-    st.info("No hay autores disponibles")
-# Listado de libros
-st.header("Listado de libros")
-libros = libro_service.listar_libros()
-if libros:
-    for libro in libros:
-        st.write(f"**Título:** {libro['titulo']}")
-        st.write(f"**Autor:** {libro['autor']}")
-        st.write(f"**Género:** {libro['genero']}")
-        st.write("---")
-else:
-    st.info("No hay libros disponibles")
+            st.error(response.text)
 
-#Listado de géneros
-st.header("Listado de géneros")
-generos = service_generos.listar_generos()
-if generos:
-    for genero in generos:
-        st.write(f"**Nombre:** {genero['nombre']}")
-        st.write("---")
-else:
-    st.info("No hay géneros disponibles")
+    st.divider()
 
-# Agregar review a un libro
-st.header("Agregar una review a un libro")
-with st.form("add_review_form"):
-    review_title = st.text_input("Título del libro para la review")
-    review_content = st.text_area("Contenido de la review")
-    submit_button = st.form_submit_button("Agregar Review")
-    if submit_button:
-        libro_service.agregar_review(review_title, review_content)
-        st.success("Review agregada exitosamente")
-# Dar puntaje a un libro
-st.header("Dar puntaje a un libro")
-with st.form("rate_book_form"):
-    rate_title = st.text_input("Título del libro para puntuar")
-    rate_score = st.slider("Puntaje (1-5)", 1, 5)
-    submit_button = st.form_submit_button("Dar Puntaje")
-    if submit_button:
-        libro_service.dar_puntaje(rate_title, rate_score)
-        st.success("Puntaje dado exitosamente")
+    st.header("Actualizar progreso de lectura")
+
+    progress_book_id = st.number_input(
+        "ID del libro",
+        min_value=1,
+        step=1,
+        key="progress_book_id",
+    )
+
+    progress_pages = st.number_input(
+        "Páginas leídas",
+        min_value=0,
+        step=1,
+        key="progress_pages",
+    )
+
+    if st.button(
+        "Actualizar progreso",
+        key="update_progress",
+    ):
+
+        response = requests.patch(
+            f"{API_URL}/books/{progress_book_id}/progress",
+            json={
+                "read_pages": int(
+                    progress_pages
+                )
+            },
+        )
+
+        if response.status_code == 200:
+            st.success(
+                "Progreso actualizado"
+            )
+        else:
+            st.error(response.text)
+
+    st.divider()
+
+
+    st.header("Actualizar review")
+
+    review_book_id = st.number_input(
+        "ID libro para review",
+        min_value=1,
+        step=1,
+        key="review_book_id",
+    )
+
+    new_review = st.text_area(
+        "Nueva review",
+        key="new_review",
+    )
+
+    if st.button(
+        "Actualizar review",
+        key="update_review",
+    ):
+
+        response = requests.patch(
+            f"{API_URL}/books/{review_book_id}/review",
+            json={
+                "review": new_review
+            },
+        )
+
+        if response.status_code == 200:
+            st.success(
+                "Review actualizada"
+            )
+        else:
+            st.error(response.text)
+    
+    st.divider()
+
+    st.divider()
+
+    st.header("Actualizar puntaje")
+
+    score_book_id = st.number_input(
+        "ID libro para puntaje",
+        min_value=1,
+        step=1,
+        key="score_book_id",
+    )
+
+    new_score = st.slider(
+        "Nuevo puntaje",
+        1,
+        5,
+        3,
+        key="new_score",
+    )
+
+    if st.button(
+        "Actualizar puntaje",
+        key="update_score",
+    ):
+
+        response = requests.patch(
+            f"{API_URL}/books/{score_book_id}/score",
+            json={
+                "score": int(new_score)
+            },
+        )
+
+        if response.status_code == 200:
+            st.success(
+                "Puntaje actualizado"
+            )
+        else:
+            st.error(response.text)
+
+    st.divider()
+
+
+    st.header("Buscar libros por autor")
+
+    author_search_id = st.number_input(
+        "ID autor",
+        min_value=1,
+        step=1,
+        key="author_search",
+    )
+
+    if st.button(
+        "Buscar libros del autor",
+        key="author_books",
+    ):
+
+        response = requests.get(
+            f"{API_URL}/books/author/{author_search_id}"
+        )
+
+        if response.status_code == 200:
+
+            books = response.json()
+
+            if books:
+
+                for book in books:
+
+                    st.write(
+                        f"📚 {book['title']}"
+                    )
+
+            else:
+                st.info(
+                    "Este autor no tiene libros"
+                )
+    st.divider()
+
+
+    st.header("Buscar libros por género")
+
+    genre_search_id = st.number_input(
+        "ID género",
+        min_value=1,
+        step=1,
+        key="genre_search",
+    )
+
+    if st.button(
+        "Buscar libros del género",
+        key="genre_books",
+    ):
+
+        response = requests.get(
+            f"{API_URL}/books/genre/{genre_search_id}"
+        )
+
+        if response.status_code == 200:
+
+            books = response.json()
+
+            if books:
+
+                for book in books:
+
+                    st.write(
+                        f"📚 {book['title']}"
+                    )
+
+            else:
+                st.info(
+                    "No hay libros en este género"
+                )
+
+    st.divider()
+
+    st.header("Listado de libros")
+
+    response = requests.get(
+        f"{API_URL}/books/"
+    )
+
+    if response.status_code == 200:
+
+        books = response.json()
+
+        if books:
+
+            for book in books:
+
+                st.subheader(
+                    book["title"]
+                )
+
+                st.write(
+                    f"ID: {book['id']}"
+                )
+
+                st.write(
+                    f"Autor ID: {book['author_id']}"
+                )
+
+                st.write(
+                    f"Género ID: {book['genre_id']}"
+                )
+
+                st.write(
+                    f"Año: {book['published_year']}"
+                )
+
+                st.write(
+                    f"Páginas: "
+                    f"{book['read_pages']} / "
+                    f"{book['total_pages']}"
+                )
+
+                porcentaje = (
+                    book["read_pages"]
+                    / book["total_pages"]
+                )
+
+                st.progress(
+                    min(
+                        porcentaje,
+                        1.0
+                    )
+                )
+
+                st.write(
+                    f"Puntaje: "
+                    f"{book.get('score')}"
+                )
+
+                st.write(
+                    f"Review: "
+                    f"{book.get('review')}"
+                )
+
+                st.divider()
+
+        else:
+            st.info(
+                "No hay libros"
+            )
+
 
